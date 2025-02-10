@@ -1,6 +1,6 @@
 # SNAP!
 
-##The Concept
+## The Concept
 A java based game of snap where a deck of cards is shuffled and revealed one by one until the player gets a SNAP! 
 SIMPLE: Player wins when card drawn matches the previous card by number or suit automatically 
 HARDER: Player wins when card drawn matches the previous card but ONLY if they type SNAP in the command line.
