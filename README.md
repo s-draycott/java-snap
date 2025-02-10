@@ -9,16 +9,15 @@ POTENITAL EXTENSION: Enable two player functionality.
 
 ## The Breakdown
 ### Create Deck of Cards:
-- [] Create **CardGame** class
-  - [] Create **ArrayList<Card>** of cards containg 52 cards which is created and populated when the game is contructed
+- [x] Create **CardGame** class
+  - [x] Create **ArrayList<Card>** of cards containg 52 cards which is created and populated when the game is contructed
   - [] Has a **name** which is defined in the constructor??
-  - [] Create a **getDeck** method to list all of the cards in the deck
-- [] Create **Card** class
-  - [] Create deckOfCards attribute with the following fields
-      - [] **String suit** = unicode symbols ♥ ♦ ♣ ♠
-      - [] **String symbol** = number/face card name e.g. A, 2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K.
-      - [] **Int value** = 2-14 (Ace = high)
-      - [] **toString** method that describes the class
+  - [x] Create a **getDeck** method to list all of the cards in the deck
+- [x] Create **Card** class
+    - [x] **String suit** = unicode symbols ♥ ♦ ♣ ♠
+    - [x] **String symbol** = number/face card name e.g. A, 2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K.
+    - [x] **Int value** = 2-14 (Ace = high)
+    - [x] **toString** method that describes the class
 ### Adding Deal and Shuffle Methods:
 - [] **Card dealCard()** - Will take a card from the "top of the deck" and return it.
 - [] **ArrayList<Card> sortDeckNumberOrder()** - sorts deck in number order (e.g. 2♥ 2♦ 2♣ 2♠ 3♥ 3♦ 3♣ 3♠ ...) and stores the new shuffled deck BACK INTO the **deckOfCards** attribute
