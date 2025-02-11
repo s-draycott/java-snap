@@ -20,7 +20,6 @@ public class Card {
         return this.symbols + " of " + this.suits;
     }
 
-
     public String getSuit() {
         return suits;
     }
@@ -40,8 +39,8 @@ public class Card {
     public int getValues() {
         return values;
     }
-
     public void setValues(int values) {
         this.values = values;
     }
+
 }

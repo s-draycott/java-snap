@@ -12,5 +12,4 @@ public class CardSuitComparator implements Comparator<Card> {
             return -1;
         } else return 0;
     }
-
 }
