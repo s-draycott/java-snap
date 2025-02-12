@@ -9,15 +9,15 @@ public class Snap extends CardDeck {
         startGame(newDeck);
     }
 
-    static Scanner scanner = new Scanner(System.in);
-
     public static void startGame(CardDeck deck){
+        Scanner scanner = new Scanner(System.in);
         ArrayList<Card> deckOfCards = deck.generateCardDeck();
         System.out.println("\nWelcome to SNAP! \nYour card deck has been generated.");
 
         System.out.println("Press enter to shuffle the deck");
         scanner.nextLine();
         deck.shuffleDeck();
+
 
         System.out.println("You are ready to play Snap! \nPress enter to draw the next card or type 'SNAP' if two card values match!");
         scanner.nextLine();
@@ -48,11 +48,6 @@ public class Snap extends CardDeck {
                 break;
             } else System.out.println("Sorry we have encountered an unforeseen error, please restart the game");;
         }
-
-
-
-
-
 
     }
 

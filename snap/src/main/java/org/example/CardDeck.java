@@ -4,12 +4,11 @@ import java.util.*;
 public class CardDeck {
     private final ArrayList<Card> deckOfCards = new ArrayList<>(52);
 
-    public ArrayList<Card> getDeck() {
+    public void getDeck() {
         System.out.println("Here's your deck of cards:");
         for (Card card : deckOfCards) {
             System.out.println(card);
         }
-        return deckOfCards;
     }
 
     public Card dealCard() {
@@ -19,16 +18,14 @@ public class CardDeck {
         } else return null;
     }
 
-    public ArrayList<Card> shuffleDeck() {
+    public void shuffleDeck() {
         Collections.shuffle(deckOfCards);
         System.out.println("The deck has been shuffled");
-        return deckOfCards;
     }
 
-    public ArrayList<Card> sortDeckInNumberOrder(){
+    public void sortDeckInNumberOrder(){
         deckOfCards.sort(new CardValueComparator());
         System.out.println("Deck has been shuffled into number order");
-        return deckOfCards;
     }
 
     public void sortDeckInSuitOrder() {
@@ -37,59 +34,14 @@ public class CardDeck {
         System.out.println("Deck has been shuffled into suit order");
     }
 
-    public ArrayList<Card> generateCardDeck() {
-        deckOfCards.add(new Card("♥", "2", 2));
-        deckOfCards.add(new Card("♥", "3", 3));
-        deckOfCards.add(new Card("♥", "4", 4));
-        deckOfCards.add(new Card("♥", "5", 6));
-        deckOfCards.add(new Card("♥", "6", 6));
-        deckOfCards.add(new Card("♥", "7", 7));
-        deckOfCards.add(new Card("♥", "8", 8));
-        deckOfCards.add(new Card("♥", "9", 9));
-        deckOfCards.add(new Card("♥", "10", 10));
-        deckOfCards.add(new Card("♥", "J", 11));
-        deckOfCards.add(new Card("♥", "Q", 12));
-        deckOfCards.add(new Card("♥", "K", 13));
-        deckOfCards.add(new Card("♥", "A", 14));
-        deckOfCards.add(new Card("♦", "2", 2));
-        deckOfCards.add(new Card("♦", "3", 3));
-        deckOfCards.add(new Card("♦", "4", 4));
-        deckOfCards.add(new Card("♦", "5", 6));
-        deckOfCards.add(new Card("♦", "6", 6));
-        deckOfCards.add(new Card("♦", "7", 7));
-        deckOfCards.add(new Card("♦", "8", 8));
-        deckOfCards.add(new Card("♦", "9", 9));
-        deckOfCards.add(new Card("♦", "10", 10));
-        deckOfCards.add(new Card("♦", "J", 11));
-        deckOfCards.add(new Card("♦", "Q", 12));
-        deckOfCards.add(new Card("♦", "K", 13));
-        deckOfCards.add(new Card("♦", "A", 14));
-        deckOfCards.add(new Card("♣", "2", 2));
-        deckOfCards.add(new Card("♣", "3", 3));
-        deckOfCards.add(new Card("♣", "4", 4));
-        deckOfCards.add(new Card("♣", "5", 6));
-        deckOfCards.add(new Card("♣", "6", 6));
-        deckOfCards.add(new Card("♣", "7", 7));
-        deckOfCards.add(new Card("♣", "8", 8));
-        deckOfCards.add(new Card("♣", "9", 9));
-        deckOfCards.add(new Card("♣", "10", 10));
-        deckOfCards.add(new Card("♣", "J", 11));
-        deckOfCards.add(new Card("♣", "Q", 12));
-        deckOfCards.add(new Card("♣", "K", 13));
-        deckOfCards.add(new Card("♣", "A", 14));
-        deckOfCards.add(new Card("♠", "2", 2));
-        deckOfCards.add(new Card("♠", "3", 3));
-        deckOfCards.add(new Card("♠", "4", 4));
-        deckOfCards.add(new Card("♠", "5", 6));
-        deckOfCards.add(new Card("♠", "6", 6));
-        deckOfCards.add(new Card("♠", "7", 7));
-        deckOfCards.add(new Card("♠", "8", 8));
-        deckOfCards.add(new Card("♠", "9", 9));
-        deckOfCards.add(new Card("♠", "10", 10));
-        deckOfCards.add(new Card("♠", "J", 11));
-        deckOfCards.add(new Card("♠", "Q", 12));
-        deckOfCards.add(new Card("♠", "K", 13));
-        deckOfCards.add(new Card("♠", "A", 14));
-        return deckOfCards;
+    public ArrayList<Card> generateCardDeck(){
+        for(int i =0; i<4; i++){
+            CardSuit suit = CardSuit.values()[i];
+            int counter = 2;
+            for(int j=0; j<13; j++){
+                Card card = new Card(suit, CardSymbol.values()[j], counter++);
+                deckOfCards.add(card);
+            }
+        } return deckOfCards;
     }
 }

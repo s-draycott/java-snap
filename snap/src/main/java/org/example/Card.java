@@ -1,15 +1,11 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-
 public class Card {
-    private String suits;
-    private String symbols;
+    private CardSuit suits;
+    private CardSymbol symbols;
     private int values;
 
-    public Card(String suits, String symbols, int values) {
+    public Card(CardSuit suits, CardSymbol symbols, int values) {
         this.suits = suits;
         this.symbols = symbols;
         this.values = values;
@@ -17,30 +13,27 @@ public class Card {
 
     @Override
     public String toString(){
-        return this.symbols + " of " + this.suits;
+        return this.symbols.getCardSymbol() + " of " + this.suits.getCardSymbol();
     }
 
-    public String getSuit() {
+    public CardSuit getSuit() {
         return suits;
     }
 
     public void setSuit(String suit) {
-        this.suits = suit;
+        this.suits = CardSuit.valueOf(suit);
     }
 
-    public String getSymbol() {
+    public CardSymbol getSymbol() {
         return symbols;
     }
 
     public void setSymbol(String symbol) {
-        this.symbols = symbol;
+        this.symbols = CardSymbol.valueOf(symbol);
     }
 
     public int getValues() {
         return values;
-    }
-    public void setValues(int values) {
-        this.values = values;
     }
 
 }
