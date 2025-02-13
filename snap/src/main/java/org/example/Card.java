@@ -13,7 +13,7 @@ public class Card {
 
     @Override
     public String toString(){
-        return this.symbols.getCardSymbol() + " of " + this.suits.getCardSymbol();
+        return this.symbols.getCardSymbol() + " of " + this.suits.getCardSymbol() + " value of " + this.values;
     }
 
     public CardSuit getSuit() {

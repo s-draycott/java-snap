@@ -2,7 +2,9 @@ package org.example;
 import java.util.*;
 
 public class CardDeck {
-    private final ArrayList<Card> deckOfCards = new ArrayList<>(52);
+    private ArrayList<Card> deckOfCards = new ArrayList<>(52);
+
+    public CardDeck() {}
 
     public void getDeck() {
         System.out.println("Here's your deck of cards:");
@@ -11,27 +13,48 @@ public class CardDeck {
         }
     }
 
+    public boolean deckHasCards(){
+        return !deckOfCards.isEmpty();
+    }
+
     public Card dealCard() {
-        if(!deckOfCards.isEmpty()){
+        if(deckHasCards()){
             System.out.println(deckOfCards.getFirst());
             return deckOfCards.removeFirst();
         } else return null;
     }
 
+    public Card dealCardToPlayer() {
+        if(deckHasCards()){
+            return deckOfCards.remove(deckOfCards.size() -1);
+        } else return null;
+    }
+
+    public void dealDeck(CardDeck deck, Player player1, Player player2) {
+        for(int card = 0; card < 26; card++) {
+            Card card1 = deck.dealCardToPlayer();
+            player1.addCard(card1);
+            Card card2 = deck.dealCardToPlayer();
+            player2.addCard(card2);
+        }
+        System.out.println("Great! The deck has been dealt between players!");
+    }
+
+
     public void shuffleDeck() {
         Collections.shuffle(deckOfCards);
-        System.out.println("The deck has been shuffled");
+        System.out.println("Great! The deck has been shuffled.");
     }
 
     public void sortDeckInNumberOrder(){
         deckOfCards.sort(new CardValueComparator());
-        System.out.println("Deck has been shuffled into number order");
+        System.out.println("Deck has been shuffled into number order.");
     }
 
     public void sortDeckInSuitOrder() {
         deckOfCards.sort(new CardValueComparator());
         deckOfCards.sort(new CardSuitComparator());
-        System.out.println("Deck has been shuffled into suit order");
+        System.out.println("Deck has been shuffled into suit order.");
     }
 
     public ArrayList<Card> generateCardDeck(){
@@ -44,4 +67,5 @@ public class CardDeck {
             }
         } return deckOfCards;
     }
+
 }
