@@ -75,13 +75,13 @@ public class Snap extends CardDeck {
                         } else {
                             lastCard = currentCard;
 //                            currentCard = player1.playCard();
-                            currentPlayersTurn +=1;
+                            currentPlayersTurn += 1;
                         }
                     }
                 }
 
             //LOGIC FOR PLAYER 2's TURN
-            } else if (currentPlayersTurn ==2) {
+            } else if (currentPlayersTurn == 2) {
                 System.out.println("Player 2 - it's your turn");
                 currentCard = player2.playCard();
                 System.out.println("Player 1 press enter to end your turn or SNAP");
@@ -97,15 +97,13 @@ public class Snap extends CardDeck {
                         } else {
                             lastCard = currentCard;
                             currentCard = player1.playCard();
-                            currentPlayersTurn-=1;
+                            currentPlayersTurn -= 1;
                         }
                     }
                 }
             }
-
-
-
         }
+
 //        int currentPlay = 1;
 //        for(int card = 0; card <=52; card++) {
 //            if(Objects.equals(currentCard.getSymbol(), lastCard.getSymbol())) {
