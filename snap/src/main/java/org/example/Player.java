@@ -15,11 +15,12 @@ public class Player {
 
     public Card playCard(){
         if(!playersCards.isEmpty()){
+            System.out.println(playersCards.getFirst());
             return playersCards.removeFirst();
         } else return null;
     }
 
-    public boolean hasCards() {
+    public boolean hasPlayerCards() {
         return !playersCards.isEmpty();
     }
 
