@@ -11,11 +11,6 @@ public class Card {
         this.values = values;
     }
 
-    @Override
-    public String toString(){
-        return this.symbols.getCardSymbol() + " of " + this.suits.getCardSymbol() + " value of " + this.values;
-    }
-
     public CardSuit getSuit() {
         return suits;
     }
@@ -34,6 +29,11 @@ public class Card {
 
     public int getValues() {
         return values;
+    }
+
+    @Override
+    public String toString(){
+        return this.symbols.getCardSymbol() + " of " + this.suits.getCardSymbol() + " worth " + this.values + " points";
     }
 
 }
