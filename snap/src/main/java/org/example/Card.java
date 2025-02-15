@@ -33,7 +33,7 @@ public class Card {
 
     @Override
     public String toString(){
-        return this.symbols.getCardSymbol() + " of " + this.suits.getCardSymbol() + " worth " + this.values + " points";
+        return this.symbols.getCardSymbol() + " of " + this.suits.getCardSymbol();
     }
 
 }

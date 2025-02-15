@@ -26,16 +26,16 @@ public class Snap extends CardDeck {
         scanner = new Scanner(System.in);
         deck.generateCardDeck();
 
-        System.out.println("\n♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥\n♦ Welcome to SNAP! ♠\n♥ ♠ ♣ ♦ ♥ ♠ ♣ ♦ ♥ ♠\nYour card deck has been generated.");
+        System.out.println("\n♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥\n♦  Welcome to SNAP  ♠\n♥ ♠ ♣ ♦ ♥ ♠ ♣ ♦ ♥ ♠\nYour card deck has been generated.");
         System.out.println("Press enter to shuffle the deck...");
         String userInput = scanner.nextLine();
-        deck.shuffleDeck();
+        deck.sortDeckInNumberOrder();
 
         System.out.println("Press enter to deal the cards between 2 players");
         scanner.nextLine();
         deck.dealDeck(deck, player1, player2);
 
-        System.out.println("You are ready to play Snap!\nBut first THE RULES:\nPress enter on your turn to draw the next card or type 'SNAP' if two card values match!");
+        System.out.println("You are ready to play Snap!\nBut first THE RULES:\nPress enter on your turn to draw the next card or type 'SNAP' if two card values match!\ni.e. 2 ♥ and 2 ♠ = SNAP!");
         System.out.println("Press enter to start the game...");
         scanner.nextLine();
 
@@ -55,17 +55,16 @@ public class Snap extends CardDeck {
         if(Objects.equals(currentCard.getSymbol(), lastCard.getSymbol())) {
             userInput = scanner.nextLine().toUpperCase();
             if (userInput.equals("SNAP")) {
-                System.out.printf("\n⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐\n SNAP! PLAYER %d WINS! \n⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐\n", currentPlayerTurn);
+                System.out.printf("\n⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐\n⭐  SNAP! PLAYER %d WINS!  ⭐\n⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐\n", currentPlayerTurn);
                 return true;
             } else {
-                System.out.printf("PLAYER %d LOSES ☠ - YOU MISSED A SNAP! Goodbye...\n", currentPlayerTurn);
+                System.out.printf("PLAYER %d LOSES ☹ - YOU MISSED A SNAP! Goodbye...\n", currentPlayerTurn);
                 return true;
             }
         } else if (!Objects.equals(currentCard.getSymbol(), lastCard.getSymbol()) && currentPlayer.hasPlayerCards() && otherPlayer.hasPlayerCards()) {
             userInput = scanner.nextLine().toUpperCase();
             if(userInput.equals("SNAP")){
-                System.out.printf("PLAYER %d LOSES! That wasn't a SNAP - Goodbye...\n", currentPlayerTurn);
-                System.out.println(currentPlayersTurn);
+                System.out.printf("  ❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n❌❌ PLAYER %d LOSES! That wasn't a SNAP - Goodbye..❌❌\n  ❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌", currentPlayerTurn);
                 return true;
             } else {
                 lastCard = currentCard;
@@ -86,23 +85,11 @@ public class Snap extends CardDeck {
         while (player1.hasPlayerCards() && player2.hasPlayerCards()) {
             //LOGIC FOR PLAYER 1s TURN
             if(currentPlayersTurn == 1) {
-                System.out.println("player 1s turn if statement");
-//                checkPlayerWon(currentPlayersTurn, player1, player2);
                 if(checkPlayerWon(currentPlayersTurn, player1, player2)) {
-                    System.out.println("executed1");
                     break;
                 } else if (checkPlayerWon(currentPlayersTurn, player2, player1)) {
-                    System.out.println("executed 1a");
                     break;
                 }
-//            } else if (currentPlayersTurn == 2) {
-//                System.out.println("player 2s turn if statement");
-////                checkPlayerWon(currentPlayersTurn, player2, player1);
-//                if(checkPlayerWon(currentPlayersTurn, player2, player1)) {
-//                    System.out.println("executed 2");
-//                    break;
-//                }else if (checkPlayerWon(currentPlayersTurn, player1, player2))
-//                    break;
             } else System.out.println("executed 3");;
         }
 
@@ -114,21 +101,7 @@ public class Snap extends CardDeck {
 
 
 
-//        int currentPlay = 1;
-//        for(int card = 0; card <=52; card++) {
-//            if(Objects.equals(currentCard.getSymbol(), lastCard.getSymbol())) {
-//                if(userSelection1.equals("SNAP")) {
-//                    System.out.println("YOU WIN");
-//                } else if (!Objects.equals(currentCard.getSymbol(), lastCard.getSymbol()) && player1.hasPlayerCards() && player2.hasPlayerCards()) {
-//                String userInput2= scanner.nextLine().toUpperCase();
-//                if(userInput2.equals("SNAP")){
-//                    System.out.println("YOU LOSE! That wasn't a SNAP - Goodbye...");
-//                } else {
-//                    lastCard = currentCard;
-//                    currentCard = player1.playCard();
-//                }
-//            }
-//        }}
+
 
 //        //LOGIC FOR SINGLE PLAYER MODE
 //        Card lastCard = deck.dealCard();
