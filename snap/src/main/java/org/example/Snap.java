@@ -1,9 +1,6 @@
 package org.example;
-import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Scanner;
-import java.util.Timer;
+
+import java.util.*;
 
 public class Snap extends CardDeck {
     private Scanner scanner;
@@ -13,10 +10,29 @@ public class Snap extends CardDeck {
     private Card currentCard;
     private Card lastCard;
     private final CardDeck deck = new CardDeck();
-
+    private Timer timer = new Timer();
+    private boolean timerEnd;
     // Having constructor opens possibility to add extra field to child class
     public Snap() {
         super();
+    }
+
+    public void startTimer(int timerSeconds) {
+        TimerTask task = new TimerTask() {
+            int time = timerSeconds;
+
+            @Override
+            public void run() {
+                System.out.println(time);
+                time--;
+                if (time == 0) {
+                    timerEnd = true;
+                    timer.cancel();
+                    System.out.println("TIME'S UP");
+                }
+            }
+        };
+        timer.schedule(task, 0, 1000);
     }
 
     public void startSnap() {
@@ -28,7 +44,7 @@ public class Snap extends CardDeck {
 
         System.out.println("\n♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥\n♦  Welcome to SNAP  ♠\n♥ ♠ ♣ ♦ ♥ ♠ ♣ ♦ ♥ ♠\nYour card deck has been generated.");
         System.out.println("Press enter to shuffle the deck...");
-        String userInput = scanner.nextLine();
+        scanner.nextLine();
         deck.sortDeckInNumberOrder();
 
         System.out.println("Press enter to deal the cards between 2 players");
@@ -40,67 +56,73 @@ public class Snap extends CardDeck {
         scanner.nextLine();
 
         currentPlayersTurn = 1;
-        GameTimer timer = new GameTimer();
-        lastCard = new Card(null, null, 0 );
+        lastCard = new Card(null, null, 0);
         currentCard = lastCard;
     }
 
-
-    public boolean checkPlayerWon(int currentPlayerTurn, Player currentPlayer, Player otherPlayer) {
-        System.out.printf("Player %d - Your card is:\n", currentPlayerTurn);
-        currentCard = currentPlayer.playCard();
-//                timer.startTimer();
-        System.out.printf("Player %d press enter to end your turn or SNAP\n", currentPlayerTurn);
+    public boolean checkPlayerWon(int currentPlayerTurn) {
         String userInput;
-        if(Objects.equals(currentCard.getSymbol(), lastCard.getSymbol())) {
+        System.out.printf("Player %d - Your card is:\n", currentPlayerTurn);
+
+        //Ensures the correct person is playing a card from the correct persons deck.
+        if (currentPlayerTurn == 1) {
+            currentCard = player1.playCard();
+        } else if (currentPlayerTurn == 2) {
+            currentCard = player2.playCard();
+        }
+
+        System.out.printf("Player %d press enter to end your turn or SNAP\n", currentPlayerTurn);
+
+
+        //logic for if the current and previous cards match
+        if (Objects.equals(currentCard.getSymbol(), lastCard.getSymbol())) {
+            startTimer(5);
+            
+            if(timerEnd){
+                System.out.println("thrugh the if statemtne");return true;}
             userInput = scanner.nextLine().toUpperCase();
-            if (userInput.equals("SNAP")) {
+            if (timerEnd) {
+                System.out.println("TIMES UP");
+                return true;
+            } else if (userInput.equals("SNAP")) {
                 System.out.printf("\n⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐\n⭐  SNAP! PLAYER %d WINS!  ⭐\n⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐\n", currentPlayerTurn);
                 return true;
             } else {
-                System.out.printf("PLAYER %d LOSES ☹ - YOU MISSED A SNAP! Goodbye...\n", currentPlayerTurn);
+                System.out.printf("❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n PLAYER %d LOSES - You missed a SNAP! Goodbye...\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n", currentPlayerTurn);
                 return true;
             }
-        } else if (!Objects.equals(currentCard.getSymbol(), lastCard.getSymbol()) && currentPlayer.hasPlayerCards() && otherPlayer.hasPlayerCards()) {
+        //logic for if the current and previous cards do NOT match
+        } else if (!Objects.equals(currentCard.getSymbol(), lastCard.getSymbol()) && player2.hasPlayerCards()) {
             userInput = scanner.nextLine().toUpperCase();
-            if(userInput.equals("SNAP")){
-                System.out.printf("  ❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n❌❌ PLAYER %d LOSES! That wasn't a SNAP - Goodbye..❌❌\n  ❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌", currentPlayerTurn);
+            if (userInput.equals("SNAP") && !timerEnd) {
+                System.out.printf("\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n  PLAYER %d LOSES! That wasn't a SNAP - Goodbye... \n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n", currentPlayerTurn);
                 return true;
             } else {
                 lastCard = currentCard;
-                if (currentPlayerTurn == 1){
+                if (currentPlayerTurn == 1) {
                     currentPlayersTurn += 1;
-                } else if (currentPlayersTurn == 2) {
+                } else if (currentPlayerTurn == 2) {
                     currentPlayersTurn -= 1;
                 }
             }
-        }  else if(!player1.hasPlayerCards()) {
-        scanner.nextLine();
-        System.out.println("IT'S A DRAW! You have ran out of cards before reaching a SNAP!");
-        return true;
-    } return false;
-    };
+        //logic for if player 1 runs out of cards (player 1 will always run out first
+        } else if (!player1.hasPlayerCards()) {
+            System.out.println("IT'S A DRAW! You have ran out of cards before reaching a SNAP!\nGoodbye...");
+            return true;
+        }
+        return false;
+    }
 
     public void playSnap() {
-        while (player1.hasPlayerCards() && player2.hasPlayerCards()) {
-            //LOGIC FOR PLAYER 1s TURN
-            if(currentPlayersTurn == 1) {
-                if(checkPlayerWon(currentPlayersTurn, player1, player2)) {
-                    break;
-                } else if (checkPlayerWon(currentPlayersTurn, player2, player1)) {
-                    break;
-                }
-            } else System.out.println("executed 3");;
+        while (player2.hasPlayerCards()) {
+            if (checkPlayerWon(currentPlayersTurn) && !timerEnd) {
+                break;
+            } else if (timerEnd) {
+                break;
+            }
         }
-
-
-
-
-
-
-
-
-
+    }
+}
 
 
 //        //LOGIC FOR SINGLE PLAYER MODE
@@ -134,5 +156,4 @@ public class Snap extends CardDeck {
 //    }
 
 
-    }
-}
+

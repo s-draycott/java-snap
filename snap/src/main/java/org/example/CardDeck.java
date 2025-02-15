@@ -2,9 +2,9 @@ package org.example;
 import java.util.*;
 
 public class CardDeck {
-    private ArrayList<Card> deckOfCards = new ArrayList<>(52);
-
     public CardDeck() {}
+
+    private final ArrayList<Card> deckOfCards = new ArrayList<>(52);
 
     public void getDeck() {
         System.out.println("Here's your deck of cards:");
@@ -40,7 +40,6 @@ public class CardDeck {
         System.out.println("Great! The deck has been dealt between players!");
     }
 
-
     public void shuffleDeck() {
         Collections.shuffle(deckOfCards);
         System.out.println("Great! The deck has been shuffled.");
@@ -67,5 +66,4 @@ public class CardDeck {
             }
         } return deckOfCards;
     }
-
 }
