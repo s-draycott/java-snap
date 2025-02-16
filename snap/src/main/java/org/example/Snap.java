@@ -10,17 +10,16 @@ public class Snap extends CardDeck {
     private Card currentCard;
     private Card lastCard;
     private final CardDeck deck = new CardDeck();
-    private Timer timer = new Timer();
+    private Timer timer1 = new Timer();
     private boolean timerEnd;
     // Having constructor opens possibility to add extra field to child class
     public Snap() {
         super();
     }
 
-    public void startTimer(int timerSeconds) {
+    public void startTimer(int timerSeconds, Timer timer) {
         TimerTask task = new TimerTask() {
             int time = timerSeconds;
-
             @Override
             public void run() {
                 System.out.println(time);
@@ -28,7 +27,8 @@ public class Snap extends CardDeck {
                 if (time == 0) {
                     timerEnd = true;
                     timer.cancel();
-                    System.out.println("TIME'S UP");
+                    System.out.println("\n⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛\n⌛  TIME'S UP. YOU LOSE! Goodbye... ⌛\n⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛");
+                    System.exit(0);
                 }
             }
         };
@@ -45,7 +45,7 @@ public class Snap extends CardDeck {
         System.out.println("\n♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥\n♦  Welcome to SNAP  ♠\n♥ ♠ ♣ ♦ ♥ ♠ ♣ ♦ ♥ ♠\nYour card deck has been generated.");
         System.out.println("Press enter to shuffle the deck...");
         scanner.nextLine();
-        deck.sortDeckInNumberOrder();
+        deck.sortDeckInSuitOrder();
 
         System.out.println("Press enter to deal the cards between 2 players");
         scanner.nextLine();
@@ -73,35 +73,36 @@ public class Snap extends CardDeck {
 
         System.out.printf("Player %d press enter to end your turn or SNAP\n", currentPlayerTurn);
 
-
         //logic for if the current and previous cards match
         if (Objects.equals(currentCard.getSymbol(), lastCard.getSymbol())) {
-            startTimer(5);
-            
-            if(timerEnd){
-                System.out.println("thrugh the if statemtne");return true;}
-            userInput = scanner.nextLine().toUpperCase();
-            if (timerEnd) {
-                System.out.println("TIMES UP");
-                return true;
-            } else if (userInput.equals("SNAP")) {
+
+            startTimer(5, timer1);
+            userInput = scanner.nextLine();
+            if (userInput.toUpperCase().equals("SNAP")) {
+                timer1.cancel();
                 System.out.printf("\n⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐\n⭐  SNAP! PLAYER %d WINS!  ⭐\n⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐\n", currentPlayerTurn);
                 return true;
             } else {
+                timer1.cancel();
                 System.out.printf("❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n PLAYER %d LOSES - You missed a SNAP! Goodbye...\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n", currentPlayerTurn);
                 return true;
             }
         //logic for if the current and previous cards do NOT match
         } else if (!Objects.equals(currentCard.getSymbol(), lastCard.getSymbol()) && player2.hasPlayerCards()) {
+            Timer timer2 = new Timer();
+            startTimer(5, timer2);
             userInput = scanner.nextLine().toUpperCase();
-            if (userInput.equals("SNAP") && !timerEnd) {
+            if (userInput.equals("SNAP")) {
+                timer2.cancel();
                 System.out.printf("\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n  PLAYER %d LOSES! That wasn't a SNAP - Goodbye... \n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n", currentPlayerTurn);
                 return true;
             } else {
                 lastCard = currentCard;
                 if (currentPlayerTurn == 1) {
+                    timer2.cancel();
                     currentPlayersTurn += 1;
                 } else if (currentPlayerTurn == 2) {
+                    timer2.cancel();
                     currentPlayersTurn -= 1;
                 }
             }
@@ -115,9 +116,7 @@ public class Snap extends CardDeck {
 
     public void playSnap() {
         while (player2.hasPlayerCards()) {
-            if (checkPlayerWon(currentPlayersTurn) && !timerEnd) {
-                break;
-            } else if (timerEnd) {
+            if (checkPlayerWon(currentPlayersTurn)) {
                 break;
             }
         }
