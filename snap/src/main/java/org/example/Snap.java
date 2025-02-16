@@ -11,8 +11,7 @@ public class Snap extends CardDeck {
     private Card lastCard;
     private final CardDeck deck = new CardDeck();
     private Timer timer1 = new Timer();
-    private boolean timerEnd;
-    // Having constructor opens possibility to add extra field to child class
+
     public Snap() {
         super();
     }
@@ -22,12 +21,10 @@ public class Snap extends CardDeck {
             int time = timerSeconds;
             @Override
             public void run() {
-                System.out.println(time);
                 time--;
                 if (time == 0) {
-                    timerEnd = true;
                     timer.cancel();
-                    System.out.println("\n⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛\n⌛  TIME'S UP. YOU LOSE! Goodbye... ⌛\n⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛");
+                    System.out.println("\n⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛\n⌛ TIME'S UP. YOU LOSE! Goodbye...⌛\n⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛");
                     System.exit(0);
                 }
             }
@@ -35,23 +32,23 @@ public class Snap extends CardDeck {
         timer.schedule(task, 0, 1000);
     }
 
-    public void startSnap() {
+    public void snapIntro() {
         player1 = new Player();
         player2 = new Player();
 
         scanner = new Scanner(System.in);
         deck.generateCardDeck();
 
-        System.out.println("\n♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥\n♦  Welcome to SNAP  ♠\n♥ ♠ ♣ ♦ ♥ ♠ ♣ ♦ ♥ ♠\nYour card deck has been generated.");
+        System.out.println("\n♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥\n♦ Welcome to SNAP! ♠\n♥ ♠ ♣ ♦ ♥ ♠ ♣ ♦ ♥ ♠\nYour card deck has been generated.");
         System.out.println("Press enter to shuffle the deck...");
         scanner.nextLine();
-        deck.sortDeckInSuitOrder();
+        deck.shuffleDeck();
 
         System.out.println("Press enter to deal the cards between 2 players");
         scanner.nextLine();
         deck.dealDeck(deck, player1, player2);
 
-        System.out.println("You are ready to play Snap!\nBut first THE RULES:\nPress enter on your turn to draw the next card or type 'SNAP' if two card values match!\ni.e. 2 ♥ and 2 ♠ = SNAP!");
+        System.out.println("You are ready to play Snap!\n\nBut first THE RULES:\nPress enter on your turn to draw the next card or type 'SNAP' if two card values match!\ni.e. 2 ♥ and 2 ♠ = SNAP!\n");
         System.out.println("Press enter to start the game...");
         scanner.nextLine();
 
@@ -75,12 +72,11 @@ public class Snap extends CardDeck {
 
         //logic for if the current and previous cards match
         if (Objects.equals(currentCard.getSymbol(), lastCard.getSymbol())) {
-
             startTimer(5, timer1);
             userInput = scanner.nextLine();
             if (userInput.toUpperCase().equals("SNAP")) {
                 timer1.cancel();
-                System.out.printf("\n⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐\n⭐  SNAP! PLAYER %d WINS!  ⭐\n⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐\n", currentPlayerTurn);
+                System.out.printf("\n⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐\n⭐ SNAP! PLAYER %d WINS! ⭐\n⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐\n", currentPlayerTurn);
                 return true;
             } else {
                 timer1.cancel();
@@ -91,10 +87,10 @@ public class Snap extends CardDeck {
         } else if (!Objects.equals(currentCard.getSymbol(), lastCard.getSymbol()) && player2.hasPlayerCards()) {
             Timer timer2 = new Timer();
             startTimer(5, timer2);
-            userInput = scanner.nextLine().toUpperCase();
-            if (userInput.equals("SNAP")) {
+            userInput = scanner.nextLine();
+            if (userInput.toUpperCase().equals("SNAP")) {
                 timer2.cancel();
-                System.out.printf("\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n  PLAYER %d LOSES! That wasn't a SNAP - Goodbye... \n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n", currentPlayerTurn);
+                System.out.printf("\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\nPLAYER %d LOSES! That wasn't a SNAP - Goodbye... \n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n", currentPlayerTurn);
                 return true;
             } else {
                 lastCard = currentCard;
@@ -106,7 +102,7 @@ public class Snap extends CardDeck {
                     currentPlayersTurn -= 1;
                 }
             }
-        //logic for if player 1 runs out of cards (player 1 will always run out first
+        //logic for if player 1 runs out of cards (player 1 will always run out first)
         } else if (!player1.hasPlayerCards()) {
             System.out.println("IT'S A DRAW! You have ran out of cards before reaching a SNAP!\nGoodbye...");
             return true;
@@ -117,42 +113,10 @@ public class Snap extends CardDeck {
     public void playSnap() {
         while (player2.hasPlayerCards()) {
             if (checkPlayerWon(currentPlayersTurn)) {
-                break;
+               System.exit(0);
             }
         }
     }
 }
-
-
-//        //LOGIC FOR SINGLE PLAYER MODE
-//        Card lastCard = deck.dealCard();
-//        scanner.nextLine();
-//        Card currentCard = deck.dealCard();
-//
-//        for(int card = 0; card <= 52; card++) {
-//            if (Objects.equals(currentCard.getSymbol(), lastCard.getSymbol())) {
-//                String userInput1 = scanner.nextLine().toUpperCase();
-//                if(userInput1.equals("SNAP")){
-//                    System.out.println("SNAP! YOU WIN");
-//                } else {
-//                    System.out.println("YOU LOSE - You missed a SNAP! Goodbye....");
-//                }break;
-//            } else if (!Objects.equals(currentCard.getSymbol(), lastCard.getSymbol()) && deckHasCards()) {
-//                String userInput2= scanner.nextLine().toUpperCase();
-//                if(userInput2.equals("SNAP")){
-//                    System.out.println("YOU LOSE! That wasn't a SNAP - Goodbye...");
-//                    break;
-//                } else {
-//                    lastCard = currentCard;
-//                    currentCard = deck.dealCard();
-//                }
-//            } else if (!deckHasCards()) {
-//                scanner.nextLine();
-//                System.out.println("YOU LOSE! The deck is empty. Goodbye...");
-//                break;
-//            } else System.out.println("Sorry we have encountered an unforeseen error, please restart the game");;
-//        }
-//    }
-
 
 
