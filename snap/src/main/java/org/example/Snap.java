@@ -10,7 +10,7 @@ public class Snap extends CardDeck {
     private Card currentCard;
     private Card lastCard;
     private final CardDeck deck = new CardDeck();
-    private Timer timer1 = new Timer();
+    private boolean timerEnd;
 
     public Snap() {
         super();
@@ -24,8 +24,10 @@ public class Snap extends CardDeck {
                 time--;
                 if (time == 0) {
                     timer.cancel();
-                    System.out.println("\n⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛\n⌛ TIME'S UP. YOU LOSE! Goodbye...⌛\n⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛");
-                    System.exit(0);
+                    timerEnd = true;
+                    System.out.println("\n⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛\n TIME'S UP. YOU LOSE\n⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛ ⌛");
+                    System.out.println("Press Enter for options...");
+
                 }
             }
         };
@@ -58,6 +60,7 @@ public class Snap extends CardDeck {
     }
 
     public boolean checkPlayerWon(int currentPlayerTurn) {
+        timerEnd = false;
         String userInput;
         System.out.printf("Player %d - Your card is:\n", currentPlayerTurn);
 
@@ -72,6 +75,7 @@ public class Snap extends CardDeck {
 
         //logic for if the current and previous cards match
         if (Objects.equals(currentCard.getSymbol(), lastCard.getSymbol())) {
+            Timer timer1 = new Timer();
             startTimer(3, timer1);
             userInput = scanner.nextLine();
             if (userInput.toUpperCase().equals("SNAP")) {
@@ -80,7 +84,7 @@ public class Snap extends CardDeck {
                 return true;
             } else {
                 timer1.cancel();
-                System.out.printf("❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n PLAYER %d LOSES - You missed a SNAP! Goodbye...\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n", currentPlayerTurn);
+                System.out.printf("❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n PLAYER %d LOSES - You missed a SNAP!\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n", currentPlayerTurn);
                 return true;
             }
         //logic for if the current and previous cards do NOT match
@@ -90,7 +94,7 @@ public class Snap extends CardDeck {
             userInput = scanner.nextLine();
             if (userInput.toUpperCase().equals("SNAP")) {
                 timer2.cancel();
-                System.out.printf("\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\nPLAYER %d LOSES! That wasn't a SNAP - Goodbye... \n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n", currentPlayerTurn);
+                System.out.printf("\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n PLAYER %d LOSES! That wasn't a SNAP!\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n", currentPlayerTurn);
                 return true;
             } else {
                 lastCard = currentCard;
@@ -112,10 +116,20 @@ public class Snap extends CardDeck {
 
     public void playSnap() {
         while (player2.hasPlayerCards()) {
-            if (checkPlayerWon(currentPlayersTurn)) {
-               System.exit(0);
+            if (checkPlayerWon(currentPlayersTurn) || timerEnd) {
+                System.out.println("\nGAME OVER - What would you like to do?\n1. Play again?\nor press ENTER to Exit...");
+                restartGame();
             }
         }
+    }
+
+    public void restartGame() {
+        String userInput = scanner.nextLine();
+        if(Objects.equals(userInput, "1")){
+            snapIntro();
+            playSnap();
+        } else if (Objects.equals(userInput, "2"));
+        System.exit(0);
     }
 }
 
