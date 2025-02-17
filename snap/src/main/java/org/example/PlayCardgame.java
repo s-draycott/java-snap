@@ -9,6 +9,5 @@ public class PlayCardgame {
         Snap newGame = new Snap();
         newGame.snapIntro();
         newGame.playSnap();
-
     }
 }

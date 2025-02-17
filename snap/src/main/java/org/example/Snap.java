@@ -11,6 +11,7 @@ public class Snap extends CardDeck {
     private Card lastCard;
     private final CardDeck deck = new CardDeck();
     private boolean timerEnd;
+    private String playerColour;
 
     public Snap() {
         super();
@@ -41,8 +42,10 @@ public class Snap extends CardDeck {
         scanner = new Scanner(System.in);
         deck.generateCardDeck();
 
-        System.out.println("\n♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥\n♦ Welcome to SNAP! ♠\n♥ ♠ ♣ ♦ ♥ ♠ ♣ ♦ ♥ ♠\nYour card deck has been generated.");
-        System.out.println("Press enter to shuffle the deck...");
+        System.out.println("\n♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥\n♦ Welcome to SNAP! ♠\n♥ ♠ ♣ ♦ ♥ ♠ ♣ ♦ ♥ ♠\n");
+        System.out.println("THE RULES:\n⮞Press enter on your turn to draw the next card or type 'SNAP' if two card values match!\n⮞⮞i.e. 2 ♥ and 2 ♠ = SNAP!\n⌛ You have 3 seconds to take your turn. Take too long and you will lose ❌");
+
+        System.out.println("\nOK let's get started...\nPress enter to shuffle the deck...");
         scanner.nextLine();
         deck.shuffleDeck();
 
@@ -50,8 +53,7 @@ public class Snap extends CardDeck {
         scanner.nextLine();
         deck.dealDeck(deck, player1, player2);
 
-        System.out.println("You are ready to play Snap!\n\nBut first THE RULES:\n⮞Press enter on your turn to draw the next card or type 'SNAP' if two card values match!\n⮞⮞i.e. 2 ♥ and 2 ♠ = SNAP!\n⌛ You have 3 seconds to take your turn. Take too long and you will lose ❌");
-        System.out.println("Press enter to start the game...");
+        System.out.println("You are ready to play!\nPress enter to start the game...");
         scanner.nextLine();
 
         currentPlayersTurn = 1;
@@ -62,7 +64,7 @@ public class Snap extends CardDeck {
     public boolean checkPlayerWon(int currentPlayerTurn) {
         timerEnd = false;
         String userInput;
-        System.out.printf("Player %d - Your card is:\n", currentPlayerTurn);
+        System.out.printf("%s Player %d - Your card is: ",currentPlayerColour(), currentPlayerTurn);
 
         //Ensures the correct person is playing a card from the correct persons deck.
         if (currentPlayerTurn == 1) {
@@ -80,11 +82,11 @@ public class Snap extends CardDeck {
             userInput = scanner.nextLine();
             if (userInput.toUpperCase().equals("SNAP")) {
                 timer1.cancel();
-                System.out.printf("\n⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐\n⭐ SNAP! PLAYER %d WINS! ⭐\n⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐\n", currentPlayerTurn);
+                System.out.printf("\n⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐\n %s SNAP! PLAYER %d WINS! %s\n⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐\n",currentPlayerColour(), currentPlayerTurn, currentPlayerColour());
                 return true;
             } else {
                 timer1.cancel();
-                System.out.printf("❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n PLAYER %d LOSES - You missed a SNAP!\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n", currentPlayerTurn);
+                System.out.printf("❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n %s PLAYER %d LOSES - You missed a SNAP! %s\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n",currentPlayerColour(), currentPlayerTurn, currentPlayerColour());
                 return true;
             }
         //logic for if the current and previous cards do NOT match
@@ -94,7 +96,7 @@ public class Snap extends CardDeck {
             userInput = scanner.nextLine();
             if (userInput.toUpperCase().equals("SNAP")) {
                 timer2.cancel();
-                System.out.printf("\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n PLAYER %d LOSES! That wasn't a SNAP!\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n", currentPlayerTurn);
+                System.out.printf("\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n%s PLAYER %d LOSES! That wasn't a SNAP! %s\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n",currentPlayerColour(), currentPlayerTurn, currentPlayerColour());
                 return true;
             } else {
                 lastCard = currentCard;
@@ -108,7 +110,7 @@ public class Snap extends CardDeck {
             }
         //logic for if player 1 runs out of cards (player 1 will always run out first)
         } else if (!player1.hasPlayerCards()) {
-            System.out.println("IT'S A DRAW! You have ran out of cards before reaching a SNAP!\nGoodbye...");
+            System.out.println("IT'S A DRAW! \uD83D\uDD35 \uD83D\uDFE1 You have ran out of cards before reaching a SNAP!\nGoodbye...");
             return true;
         }
         return false;
@@ -117,7 +119,7 @@ public class Snap extends CardDeck {
     public void playSnap() {
         while (player2.hasPlayerCards()) {
             if (checkPlayerWon(currentPlayersTurn) || timerEnd) {
-                System.out.println("\nGAME OVER - What would you like to do?\n1. Play again?\nor press ENTER to Exit...");
+                System.out.println("\n GAME OVER - What would you like to do?\n1. Play again?\nor press ENTER to Exit...");
                 restartGame();
             }
         }
@@ -130,6 +132,14 @@ public class Snap extends CardDeck {
             playSnap();
         } else if (Objects.equals(userInput, "2"));
         System.exit(0);
+    }
+
+    public String currentPlayerColour(){
+        if(currentPlayersTurn ==1){
+            return playerColour = "\uD83D\uDD35";
+        } else {
+            return playerColour = "\uD83D\uDFE1";
+        }
     }
 }
 
