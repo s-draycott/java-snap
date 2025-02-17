@@ -48,7 +48,7 @@ public class Snap extends CardDeck {
         scanner.nextLine();
         deck.dealDeck(deck, player1, player2);
 
-        System.out.println("You are ready to play Snap!\n\nBut first THE RULES:\nPress enter on your turn to draw the next card or type 'SNAP' if two card values match!\ni.e. 2 ♥ and 2 ♠ = SNAP!\n");
+        System.out.println("You are ready to play Snap!\n\nBut first THE RULES:\n⮞Press enter on your turn to draw the next card or type 'SNAP' if two card values match!\n⮞⮞i.e. 2 ♥ and 2 ♠ = SNAP!\n⌛ You have 3 seconds to take your turn. Take too long and you will lose ❌");
         System.out.println("Press enter to start the game...");
         scanner.nextLine();
 
@@ -72,7 +72,7 @@ public class Snap extends CardDeck {
 
         //logic for if the current and previous cards match
         if (Objects.equals(currentCard.getSymbol(), lastCard.getSymbol())) {
-            startTimer(5, timer1);
+            startTimer(3, timer1);
             userInput = scanner.nextLine();
             if (userInput.toUpperCase().equals("SNAP")) {
                 timer1.cancel();
@@ -86,7 +86,7 @@ public class Snap extends CardDeck {
         //logic for if the current and previous cards do NOT match
         } else if (!Objects.equals(currentCard.getSymbol(), lastCard.getSymbol()) && player2.hasPlayerCards()) {
             Timer timer2 = new Timer();
-            startTimer(5, timer2);
+            startTimer(3, timer2);
             userInput = scanner.nextLine();
             if (userInput.toUpperCase().equals("SNAP")) {
                 timer2.cancel();
