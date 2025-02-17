@@ -42,7 +42,7 @@ public class Snap extends CardDeck {
         scanner = new Scanner(System.in);
         deck.generateCardDeck();
 
-        System.out.println("\n♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥\n♦ Welcome to SNAP! ♠\n♥ ♠ ♣ ♦ ♥ ♠ ♣ ♦ ♥ ♠\n");
+        System.out.println("\n♠\uFE0F♥\uFE0F♣\uFE0F♦\uFE0F♠\uFE0F♥\uFE0F♣\uFE0F♦\uFE0F\n Welcome to SNAP! \n♥\uFE0F♣\uFE0F♦\uFE0F♠\uFE0F♥\uFE0F♣\uFE0F♦\uFE0F♠\uFE0F\n");
         System.out.println("THE RULES:\n⮞Press enter on your turn to draw the next card or type 'SNAP' if two card values match!\n⮞⮞i.e. 2 ♥ and 2 ♠ = SNAP!\n⌛ You have 3 seconds to take your turn. Take too long and you will lose ❌");
 
         System.out.println("\nOK let's get started...\nPress enter to shuffle the deck...");
