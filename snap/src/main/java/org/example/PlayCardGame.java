@@ -1,10 +1,6 @@
 package org.example;
 
-import java.util.Calendar;
-import java.util.Timer;
-import java.util.TimerTask;
-
-public class PlayCardgame {
+public class PlayCardGame {
     public static void main(String[] args){
         Snap newGame = new Snap();
         newGame.snapIntro();

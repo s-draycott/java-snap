@@ -1,6 +1,6 @@
-# SNAP!
+# SNAP! ♠ ♥ ♣ ♦
 
-## The Concept:
+## 💭 The Concept:
 
 A java game for two players based on the common card game SNAP played within the command line.
 Each player is dealt half of the shuffled card deck.
@@ -8,16 +8,20 @@ Players then take it in turns to either press enter (end their go and pass onto 
 Each player has 3 seconds to make their move.
 If either player runs out of cards before a SNAP is reached then it's a draw!
 
-## Getting Started:
+## 🏁 Getting Started:
 
 -   To play the game, first the repository needs to be cloned and opened with your preferred IDE (e.g. IntelliJ).
 -   The repository can be cloned using the following command
-    -   $ git clone git@github.com:s-draycott/java-snap.git
--   Open the repository in your IDE and click the "Run" button within the 'PlayCardGame' class.
 
-## Playing the Game:
+```console
+git clone git@github.com:s-draycott/java-snap.git
+```
 
--   Press "Run" button within the 'PlayCardGame' class.
+-   Open the repository in your IDE and click the `Run` button within the `PlayCardGame.java` class.
+
+## 🃏 Playing the Game:
+
+-   Press `Run` button within the `PlayCardGame.java` class.
 -   Once the game has started all controls can now be executed in the command line interface.
 -   Instructions on how to play will be displayed.
 -   Follow the prompts to shuffle and deal the deck between players
@@ -28,7 +32,7 @@ If either player runs out of cards before a SNAP is reached then it's a draw!
 -   Player will lose if they enter **SNAP** when values don't match, if they miss a **Snap** or if the timer runs out.
 -   Players can then chose whether to **Play Again** or to exit.
 
-## The Code Breakdown
+## 🖥️ The Code Breakdown
 
 ### Create Deck of Cards:
 
