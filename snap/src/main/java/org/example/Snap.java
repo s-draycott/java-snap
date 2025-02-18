@@ -110,7 +110,7 @@ public class Snap extends CardDeck {
             }
         //logic for if player 1 runs out of cards (player 1 will always run out first)
         } else if (!player1.hasPlayerCards()) {
-            System.out.println("IT'S A DRAW! \uD83D\uDD35 \uD83D\uDFE1 You have ran out of cards before reaching a SNAP!\nGoodbye...");
+            System.out.println("\nIT'S A DRAW! \uD83D\uDD35 \uD83D\uDFE1 You have ran out of cards before reaching a SNAP!\n");
             return true;
         }
         return false;
